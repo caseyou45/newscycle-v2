@@ -16,11 +16,10 @@ public class CommentController {
 
     @PostMapping(path = "/comment")
     public @ResponseBody
-    String addComment(@RequestBody Comment comment) {
+    Comment addComment(@RequestBody Comment comment) {
         return commentService.addComment(comment);
 
     }
-
 
     @GetMapping(path = "/comment")
     public @ResponseBody
@@ -35,5 +34,18 @@ public class CommentController {
         return commentService.getCommentsByParentArticle(parent_article);
     }
 
+    @PatchMapping(path = "/comment/edit/{comment_id}")
+    public @ResponseBody
+    Comment updateCommentByID(@PathVariable Integer comment_id, @RequestBody Comment comment) {
+
+        return commentService.updateCommentByID(comment_id, comment);
+    }
+
+    @PatchMapping(path = "/comment/delete/{comment_id}")
+    public @ResponseBody
+    Comment deleteCommentByID(@PathVariable Integer comment_id, @RequestBody Comment comment) {
+
+        return commentService.deleteCommentByID(comment_id, comment);
+    }
 
 }

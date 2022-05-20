@@ -5,8 +5,10 @@ import com.exam.springsecurity.security.models.AuthenticationResponse;
 import com.exam.springsecurity.security.services.MyUserDetailsService;
 import com.exam.springsecurity.security.util.JwtUtil;
 import com.exam.springsecurity.user.model.Users;
+import com.exam.springsecurity.user.repository.UserRepository;
 import com.exam.springsecurity.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Controller
@@ -33,7 +36,8 @@ public class UserController {
 
     @Autowired
     private JwtUtil jwtTokenUtil;
-
+    @Autowired
+    private UserRepository userRepository;
 
     /* Basic user creation
      *
@@ -55,7 +59,6 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-
     /* Returns one user by id
      *
      * @Param  - takes one user id as variable from URI
@@ -65,7 +68,6 @@ public class UserController {
     Optional<Users> getOneUSer(@PathVariable Integer id) {
         return userService.getOneUserByID(id);
     }
-
 
     /* Basic user update
      *
@@ -77,7 +79,6 @@ public class UserController {
         return userService.updateUser(id, updatedUser.getUsername(), updatedUser.getPassword());
     }
 
-
     /* Basic user deletion
      *
      * @Param  - takes in user from frontend in request body
@@ -88,34 +89,34 @@ public class UserController {
         return userService.deleteUser(id);
     }
 
-
     /* User SignUp
      *
      * @Param  - takes in user from frontend in request body
      * @Return  - returns created User*/
     @PostMapping(path = "/user/auth/signup")
     public @ResponseBody
-    Optional<Users> userSignUp(@RequestBody Users user) {
+    ResponseEntity userSignUp(@RequestBody Users user) {
 
+        Date utilDate = new java.util.Date();
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
+        user.setCreationdate(sqlDate);
         return userService.userSignUp(user);
 
     }
 
-//    @PostMapping(path = "/user/auth/signin")
-//    public @ResponseBody
-//    ResponseEntity<String> userSignin(@RequestBody Users user) {
-//        return userService.userSignIn(user);
-//
-//    }
-
     @RequestMapping(value = "/user/auth/signin", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+
+
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
 
         } catch (BadCredentialsException e) {
-            throw new Exception("Incorrect Username and Password");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Incorrect Username and Password");
+
         }
+
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
@@ -125,6 +126,12 @@ public class UserController {
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
 
 
+    }
+
+    @GetMapping(path = "/user/details/{username}")
+    public @ResponseBody
+    Optional<Users> getOneUSer(@PathVariable String username) {
+        return userService.getUserByUsername(username);
     }
 
 

@@ -1,6 +1,7 @@
 package com.exam.springsecurity.user.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity
@@ -13,21 +14,33 @@ public class Users {
     private Integer id;
     private String username;
     private String password;
+    private Date creationdate;
+
 
     public Users() {
     }
 
-    public Users(String name, String password) {
+    public Users(String name, String password, Date creationdate) {
         this.username = name;
         this.password = password;
+        this.creationdate = creationdate;
     }
 
-    public Users(Integer id, String username, String password) {
+    public Users(Integer id, String username, String password, Date creationdate) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.creationdate = creationdate;
+
     }
 
+    public Date getCreationdate() {
+        return creationdate;
+    }
+
+    public void setCreationdate(Date creationdate) {
+        this.creationdate = creationdate;
+    }
 
     public Integer getId() {
         return id;
@@ -39,6 +52,10 @@ public class Users {
 
     public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setName(String name) {

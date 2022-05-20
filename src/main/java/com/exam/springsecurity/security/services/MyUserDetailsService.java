@@ -11,10 +11,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        return new User("foo", "foo", new ArrayList<>());
-//    }
 
 
     @Autowired
@@ -24,6 +20,7 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Users user = userRepository.findUserByUsername(username);
+
         if (null == user || !user.getUsername().equals(username)) {
             throw new UsernameNotFoundException("No user present with username: " + username);
         } else {

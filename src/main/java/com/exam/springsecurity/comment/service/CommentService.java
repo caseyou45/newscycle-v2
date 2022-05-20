@@ -5,6 +5,8 @@ import com.exam.springsecurity.comment.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class CommentService {
 
@@ -13,9 +15,9 @@ public class CommentService {
     private CommentRepository commentRepository;
 
 
-    public String addComment(Comment comment) {
+    public Comment addComment(Comment comment) {
         commentRepository.save(comment);
-        return "Saved";
+        return comment;
 
     }
 
@@ -25,8 +27,26 @@ public class CommentService {
     }
 
 
-    public Iterable<Comment> getCommentsByParentArticle(Integer parent_article) {
-        return commentRepository.getCommentsByParentArticle(parent_article);
+    public Iterable<Comment> getCommentsByParentArticle(Integer particle) {
+        return commentRepository.getCommentsByParticleOrderByDateDesc(particle);
     }
 
+    public Comment updateCommentByID(Integer comment_id, Comment newComment) {
+        Comment oldComment = commentRepository.findById(comment_id).get();
+        oldComment.setContent(newComment.getContent());
+        commentRepository.save(oldComment);
+
+        return oldComment;
+    }
+
+
+    public Comment deleteCommentByID(Integer comment_id, Comment commentDeleted) {
+        Comment oldComment = commentRepository.findById(comment_id).get();
+        oldComment.setContent(commentDeleted.getContent());
+        oldComment.setUsername(commentDeleted.getUsername());
+        oldComment.setAuthor(5);
+        commentRepository.save(oldComment);
+
+        return oldComment;
+    }
 }

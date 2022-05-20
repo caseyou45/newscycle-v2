@@ -63,7 +63,7 @@ public class ArticleService {
 
         }
 
-        return articleRepository.findArticlesByCategory(category);
+        return articleRepository.getArticlesByCategoryOrderByPublishedatDesc(category);
 
 
     }

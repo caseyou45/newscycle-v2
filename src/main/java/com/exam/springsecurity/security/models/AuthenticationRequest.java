@@ -24,6 +24,7 @@ public class AuthenticationRequest {
         return password;
     }
 
+
     public void setPassword(String password) {
         this.password = password;
     }

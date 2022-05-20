@@ -88,11 +88,12 @@ public class UserService {
     }
 
 
-    public Optional<Users> userSignUp(Users user) {
+    public ResponseEntity userSignUp(Users user) {
         Optional<Users> userOptionalByUsername = Optional.ofNullable(userRepository.findUserByUsername(user.getUsername()));
 
         if (userOptionalByUsername.isPresent()) {
-            throw new IllegalStateException("Username In Use");
+            return new ResponseEntity("Username already in use",
+                    HttpStatus.FORBIDDEN);
 
         }
 
@@ -102,10 +103,10 @@ public class UserService {
 
         user.setPassword(encodedPassword);
 
-        Users savedUser = userRepository.save(user);
+        userRepository.save(user);
 
 
-        return Optional.of(savedUser);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 

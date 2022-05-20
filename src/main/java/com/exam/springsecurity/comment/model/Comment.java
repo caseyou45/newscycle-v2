@@ -15,8 +15,9 @@ public class Comment {
     private Integer author;
     private String content;
     private String date;
-    private Integer parent_article;
-    private Integer parent_comment;
+    private Integer particle;
+    private Integer pcomment;
+    private String username;
 
     public Comment() {
     }
@@ -24,14 +25,15 @@ public class Comment {
     public Comment(Integer author,
                    String content,
                    String date,
-                   Integer parent_article,
-                   Integer parent_comment) {
+                   Integer particle,
+                   Integer pcomment, String username) {
 
         this.author = author;
         this.content = content;
         this.date = date;
-        this.parent_article = parent_article;
-        this.parent_comment = parent_comment;
+        this.particle = particle;
+        this.pcomment = pcomment;
+        this.username = username;
     }
 
 
@@ -39,14 +41,16 @@ public class Comment {
                    Integer author,
                    String content,
                    String date,
-                   Integer parent_article,
-                   Integer parent_comment) {
+                   Integer particle,
+                   Integer pcomment,
+                   String username) {
         this.id = id;
         this.author = author;
         this.content = content;
         this.date = date;
-        this.parent_article = parent_article;
-        this.parent_comment = parent_comment;
+        this.particle = particle;
+        this.pcomment = pcomment;
+        this.username = username;
     }
 
 
@@ -82,19 +86,27 @@ public class Comment {
         this.date = date;
     }
 
-    public Integer getParent_article() {
-        return parent_article;
+    public Integer getParticle() {
+        return particle;
     }
 
-    public void setParent_article(Integer parent_article) {
-        this.parent_article = parent_article;
+    public void setParticle(Integer particle) {
+        this.particle = particle;
     }
 
-    public Integer getParent_comment() {
-        return parent_comment;
+    public Integer getPcomment() {
+        return pcomment;
     }
 
-    public void setParent_comment(Integer parent_comment) {
-        this.parent_comment = parent_comment;
+    public void setPcomment(Integer pcomment) {
+        this.pcomment = pcomment;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
