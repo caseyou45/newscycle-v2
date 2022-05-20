@@ -73,11 +73,11 @@ public class UserController {
      *
      * @Param  - takes in user from request body and id as variable from URI
      * @Return  - returns String saying if user update was successful or not*/
-    @PutMapping(path = "/user/{id}")
-    public @ResponseBody
-    String updateUser(@RequestBody Users updatedUser, @PathVariable Integer id) {
-        return userService.updateUser(id, updatedUser.getUsername(), updatedUser.getPassword());
-    }
+//    @PutMapping(path = "/user/{id}")
+//    public @ResponseBody
+//    String updateUser(@RequestBody Users updatedUser, @PathVariable Integer id) {
+//        return userService.updateUser(id, updatedUser.getUsername(), updatedUser.getPassword());
+//    }
 
     /* Basic user deletion
      *

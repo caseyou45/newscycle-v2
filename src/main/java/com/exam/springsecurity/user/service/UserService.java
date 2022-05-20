@@ -55,37 +55,38 @@ public class UserService {
     public Optional<Users> getUserByUsername(String username) {
         Optional<Users> user = Optional.ofNullable(userRepository.findUserByUsername(username));
 
-        if (!user.isPresent()) {
-            throw new IllegalStateException("No user ( " + username + " ) exists.");
-        }
+//        if (!user.isPresent()) {
+//            throw new IllegalStateException("No user ( " + username + " ) exists.");
+//        }
 
         return user;
     }
 
-    @Transactional
-    public String updateUser(Integer id, String username, String password) {
-        Users user = userRepository.findById(id)
-                .orElseThrow(() -> {
-                    throw new IllegalStateException("No user ( " + id + " ) exists.");
-                });
-
-
-        if (username != null && username.length() > 0 && !Objects.equals(user.getUsername(), username)) {
-            user.setName(username);
-
-            return "Name Updated";
-        }
-
-
-        if (password != null && password.length() > 0 && !Objects.equals(user.getPassword(), password)) {
-            user.setPassword(password);
-            return "Password Updated";
-        }
-
-
-        return "Update not successful";
-
-    }
+//    @Transactional
+//    public String updateUser(Integer id, String username, String password) {
+//        Users user = userRepository.findById(id)
+//                .orElseThrow(() -> {
+//
+//                    throw new IllegalStateException("No user ( " + id + " ) exists.");
+//                });
+//
+//
+//        if (username != null && username.length() > 0 && !Objects.equals(user.getUsername(), username)) {
+//            user.setName(username);
+//
+//            return "Name Updated";
+//        }
+//
+//
+//        if (password != null && password.length() > 0 && !Objects.equals(user.getPassword(), password)) {
+//            user.setPassword(password);
+//            return "Password Updated";
+//        }
+//
+//
+//        return "Update not successful";
+//
+//    }
 
 
     public ResponseEntity userSignUp(Users user) {
