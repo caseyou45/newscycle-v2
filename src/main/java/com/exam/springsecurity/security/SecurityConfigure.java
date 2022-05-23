@@ -1,6 +1,6 @@
 package com.exam.springsecurity.security;
 
-import com.exam.springsecurity.security.filters.JWTRequestFilter;
+import com.exam.springsecurity.security.models.filters.JWTRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 
 @EnableWebSecurity

@@ -1,4 +1,4 @@
-package com.exam.springsecurity.security.filters;
+package com.exam.springsecurity.security.models.filters;
 
 
 import com.exam.springsecurity.security.services.MyUserDetailsService;
