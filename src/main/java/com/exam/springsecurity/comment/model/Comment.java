@@ -1,6 +1,7 @@
 package com.exam.springsecurity.comment.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity
@@ -14,7 +15,7 @@ public class Comment {
     private Integer id;
     private Integer author;
     private String content;
-    private String date;
+    private Date date;
     private Integer particle;
     private Integer pcomment;
     private String username;
@@ -24,7 +25,7 @@ public class Comment {
 
     public Comment(Integer author,
                    String content,
-                   String date,
+                   Date date,
                    Integer particle,
                    Integer pcomment, String username) {
 
@@ -40,7 +41,7 @@ public class Comment {
     public Comment(Integer id,
                    Integer author,
                    String content,
-                   String date,
+                   Date date,
                    Integer particle,
                    Integer pcomment,
                    String username) {
@@ -78,11 +79,11 @@ public class Comment {
         this.content = content;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

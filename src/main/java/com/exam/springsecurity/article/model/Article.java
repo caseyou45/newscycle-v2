@@ -21,6 +21,7 @@ public class Article {
     private String publishedat;
     private String title;
     private String url;
+    @Column(length = 3000)
     private String urltoimage;
 
 
