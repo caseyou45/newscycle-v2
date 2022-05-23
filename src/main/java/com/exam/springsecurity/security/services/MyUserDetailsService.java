@@ -23,11 +23,13 @@ public class MyUserDetailsService implements UserDetailsService {
 
         if (null == user || !user.getUsername().equals(username)) {
             throw new UsernameNotFoundException("No user present with username: " + username);
-            
+
         } else {
 
             return new CustomUserDetails(user);
         }
+
+        
     }
 
 }
