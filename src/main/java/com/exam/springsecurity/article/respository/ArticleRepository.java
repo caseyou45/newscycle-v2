@@ -12,7 +12,7 @@ import java.util.List;
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
 
 
-    Article findArticleByUrltoimage(String urltoimage);
+    List<Article> findArticleByUrltoimage(String urltoimage);
 
     List<Article> getArticlesByCategoryOrderByPublishedatDesc(String category);
 

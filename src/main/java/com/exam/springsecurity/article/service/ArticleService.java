@@ -19,6 +19,16 @@ public class ArticleService {
     @Autowired
     private ArticleRepository articleRepository;
 
+    /*
+        This method takes in a category of news. It then makes an API call to NewsAPI for the category. The returning
+        JSON is parsed and saved in to the database through the article repository. The request articles are then
+        returned in DESC order by date.
+
+       @param  string of category choice (science, technology, general, etc.)
+       @return  articles of the requested category
+
+
+     */
     public List<Article> getArticlesByCategory(String category) throws ParseException {
         String uri = String.format("https://newsapi.org/v2/top-headlines?country=us&category=%s&apiKey=f8453aaefcaf4cbf90fe82afa03b2bc1", category);
 
@@ -58,7 +68,7 @@ public class ArticleService {
             if (articleObject.get("url") != null) url = String.valueOf(articleObject.get("url"));
             if (articleObject.get("urlToImage") != null) urltoimage = String.valueOf(articleObject.get("urlToImage"));
 
-            if (articleRepository.findArticleByUrltoimage(urltoimage) == null) {
+            if (articleRepository.findArticleByUrltoimage(urltoimage).size() == 0) {
                 articleRepository.save(new Article(author, category, content, description, source_id, source_name, publishedat, title, url, urltoimage));
             }
 
@@ -68,6 +78,12 @@ public class ArticleService {
 
 
     }
+/*    This method returned one article by ID.
+
+      @param  id of requested article
+      @return   the article
+
+      */
 
     public Optional<Article> getOneArticleByID(int id) {
         return articleRepository.findById(id);

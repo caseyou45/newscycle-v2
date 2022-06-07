@@ -39,72 +39,30 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    /* Basic user creation
-     *
-     * @Param  - takes in user from frontend in request body
-     * @Return  - returns String saying if user creation was successful or not*/
-    @PostMapping(path = "/user")
-    public @ResponseBody
-    String addUser(@RequestBody Users user) {
-        return userService.addUser(user);
 
-    }
+    /*  This route process the user signup.
 
-    /*Returns all users
+      @param  - takes in user from frontend in request body
+      @return  - returns created User
 
-     * @Return - returns all users in JSON */
-    @GetMapping(path = "/user")
-    public @ResponseBody
-    Iterable<Users> getAllUsers() {
-        return userService.getAllUsers();
-    }
-
-    /* Returns one user by id
-     *
-     * @Param  - takes one user id as variable from URI
-     * @Return  - returns String saying if user creation was successful or not*/
-    @GetMapping(path = "/user/{id}")
-    public @ResponseBody
-    Optional<Users> getOneUSer(@PathVariable Integer id) {
-        return userService.getOneUserByID(id);
-    }
-
-    /* Basic user update
-     *
-     * @Param  - takes in user from request body and id as variable from URI
-     * @Return  - returns String saying if user update was successful or not*/
-//    @PutMapping(path = "/user/{id}")
-//    public @ResponseBody
-//    String updateUser(@RequestBody Users updatedUser, @PathVariable Integer id) {
-//        return userService.updateUser(id, updatedUser.getUsername(), updatedUser.getPassword());
-//    }
-
-    /* Basic user deletion
-     *
-     * @Param  - takes in user from frontend in request body
-     * @Return  - returns String saying if user deletion was successful or not*/
-    @DeleteMapping(path = "/user/{id}")
-    public @ResponseBody
-    String deleteUser(@PathVariable Integer id) {
-        return userService.deleteUser(id);
-    }
-
-    /* User SignUp
-     *
-     * @Param  - takes in user from frontend in request body
-     * @Return  - returns created User*/
+      */
     @PostMapping(path = "/user/auth/signup")
     public @ResponseBody
     ResponseEntity userSignUp(@RequestBody Users user) {
 
-        Date utilDate = new java.util.Date();
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-
-        user.setCreationdate(sqlDate);
         return userService.userSignUp(user);
 
     }
 
+    /* User SignIn
+
+     The route passes a user through the auth process. If a user is not found with provided credentials, an
+     error is returned. If successful, a jwt is created and returned to the user.
+
+     @param  - takes in user
+     @return  - If successful, a jwt is returned
+
+  */
     @RequestMapping(value = "/user/auth/signin", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
 
@@ -127,6 +85,16 @@ public class UserController {
 
 
     }
+
+    /* This route returns to the signed-in user their details.
+        The sign-in process only returns a jwt. This method simply returns the rest of the
+        user info that the user will need.
+
+
+     @param  - takes in username
+     @return  - returns user's info
+
+*/
 
     @GetMapping(path = "/user/details/{username}")
     public @ResponseBody

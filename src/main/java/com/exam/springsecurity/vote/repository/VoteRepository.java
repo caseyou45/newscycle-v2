@@ -12,4 +12,6 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
 
 
     Iterable<Vote> getVotesByCommentid(Integer commentid);
+
+    Iterable<Vote> getVotesByAuthor(Integer author);
 }

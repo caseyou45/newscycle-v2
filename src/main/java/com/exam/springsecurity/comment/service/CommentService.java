@@ -2,7 +2,12 @@ package com.exam.springsecurity.comment.service;
 
 import com.exam.springsecurity.comment.model.Comment;
 import com.exam.springsecurity.comment.repository.CommentRepository;
+import com.exam.springsecurity.user.model.Users;
+import com.exam.springsecurity.user.repository.UserRepository;
+import com.exam.springsecurity.vote.model.Vote;
+import com.exam.springsecurity.vote.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -10,9 +15,22 @@ import java.util.Optional;
 @Component
 public class CommentService {
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private VoteRepository voteRepository;
 
     @Autowired
     private CommentRepository commentRepository;
+
+
+    /*    This method saves one comment to the databse.
+
+      @param   the comment
+      @return  the saved comment
+
+      */
 
 
     public Comment addComment(Comment comment) {
@@ -22,14 +40,25 @@ public class CommentService {
     }
 
 
-    public Iterable<Comment> getAllComments() {
-        return commentRepository.findAll();
-    }
+    /*    This method returned all comments associated with an article.
 
+      @param  the id of the article
+      @return all comments associated with that article
+
+      */
 
     public Iterable<Comment> getCommentsByParentArticle(Integer particle) {
         return commentRepository.getCommentsByParticleOrderByDateDesc(particle);
     }
+
+
+    /*    This method updates a comments content
+
+      @param    the comment and the id of the comment
+      @return   the updated comment
+
+      */
+
 
     public Comment updateCommentByID(Integer comment_id, Comment newComment) {
         Comment oldComment = commentRepository.findById(comment_id).get();
@@ -38,6 +67,16 @@ public class CommentService {
 
         return oldComment;
     }
+
+
+    /*    This method 'deletes' a comment. Because the comments are intended to be 'threaded' on the frontend,
+          a comment can not be actually deleted. Instead, the author id is changed to a default (5), and the content and
+          username are changed to 'removed'.
+
+      @param  the id and the comment
+      @return  the deleted (aka 'removed') comment
+
+      */
 
 
     public Comment deleteCommentByID(Integer comment_id, Comment commentDeleted) {
@@ -49,4 +88,16 @@ public class CommentService {
 
         return oldComment;
     }
+
+    public Iterable<Comment> getCommentsByUsername(String username) {
+        return commentRepository.getCommentsByUsername(username);
+
+    }
+
+    public Comment getCommentByID(Integer id) {
+        return commentRepository.getCommentByid(id);
+
+    }
+
+
 }

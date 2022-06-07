@@ -4,6 +4,7 @@ package com.exam.springsecurity.vote.service;
 import com.exam.springsecurity.comment.model.Comment;
 import com.exam.springsecurity.comment.repository.CommentRepository;
 import com.exam.springsecurity.user.model.Users;
+import com.exam.springsecurity.user.repository.UserRepository;
 import com.exam.springsecurity.vote.model.Vote;
 import com.exam.springsecurity.vote.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class VoteService {
 
     @Autowired
     private VoteRepository voteRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public Vote makeVote(Vote vote) {
         voteRepository.save(vote);
@@ -30,5 +34,10 @@ public class VoteService {
 
     public Iterable<Vote> getVotesByCommentID(Integer id) {
         return voteRepository.getVotesByCommentid(id);
+    }
+
+    public Iterable<Vote> getVotesByUsername(String username) {
+        Users user = userRepository.findUserByUsername(username);
+        return voteRepository.getVotesByAuthor(user.getId());
     }
 }

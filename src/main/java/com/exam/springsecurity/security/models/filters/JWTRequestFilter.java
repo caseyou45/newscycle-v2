@@ -56,18 +56,16 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 
 
             //Handles burner account expiration
-            if (username.startsWith("burner ")) {
+            if (username.startsWith("burner")) {
 
                 Users user = userRepository.findUserByUsername(username);
                 Date whenAccountWasMade = user.getCreationdate();
                 Date now = new Date();
 
                 long diffHours = (now.getTime() - whenAccountWasMade.getTime()) / (60 * 60 * 1000);
-                System.out.println(diffHours);
 
-
-                if (diffHours > 41) {
-                    response.sendError(403, "Burner Account Has Expired");
+                if (diffHours > 24) {
+                    response.sendError(403);
                 }
 
 

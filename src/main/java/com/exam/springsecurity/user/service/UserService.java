@@ -9,9 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
-import java.util.Objects;
+import java.util.Date;
 import java.util.Optional;
+import java.util.TimeZone;
 
 
 @Component
@@ -20,73 +20,28 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    /*    This method returned to a signed-in user their own details.
 
-    public String addUser(Users user) {
-        Optional<Users> userOptionalByUsername = Optional.ofNullable(userRepository.findUserByUsername(user.getUsername()));
+      @param  username of requested user
+      @return  user's details
 
-        if (userOptionalByUsername.isPresent()) {
-            throw new IllegalStateException("Username In Use");
-        }
-        userRepository.save(user);
-        return "User Saved";
-
-    }
-
-
-    public Iterable<Users> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    public Optional<Users> getOneUserByID(Integer id) {
-        return userRepository.findById(id);
-    }
-
-    public String deleteUser(Integer id) {
-        boolean exists = userRepository.existsById(id);
-        if (!exists) {
-            throw new IllegalStateException("No user ( " + id + " ) exists.");
-        } else {
-            userRepository.deleteById(id);
-        }
-
-        return "User removed";
-    }
+      */
 
     public Optional<Users> getUserByUsername(String username) {
         Optional<Users> user = Optional.ofNullable(userRepository.findUserByUsername(username));
 
-//        if (!user.isPresent()) {
-//            throw new IllegalStateException("No user ( " + username + " ) exists.");
-//        }
-
         return user;
     }
 
-//    @Transactional
-//    public String updateUser(Integer id, String username, String password) {
-//        Users user = userRepository.findById(id)
-//                .orElseThrow(() -> {
-//
-//                    throw new IllegalStateException("No user ( " + id + " ) exists.");
-//                });
-//
-//
-//        if (username != null && username.length() > 0 && !Objects.equals(user.getUsername(), username)) {
-//            user.setName(username);
-//
-//            return "Name Updated";
-//        }
-//
-//
-//        if (password != null && password.length() > 0 && !Objects.equals(user.getPassword(), password)) {
-//            user.setPassword(password);
-//            return "Password Updated";
-//        }
-//
-//
-//        return "Update not successful";
-//
-//    }
+
+    /*    This method performs the user sign-up process. It takes in a user and checks to see if
+          the username is in use. If not, it appends to the user the creation date for the user's account.
+          It then encrypts the user's password and saves the user.
+
+         @param  username of requested user
+         @return  user's details
+
+  */
 
 
     public ResponseEntity userSignUp(Users user) {
@@ -98,11 +53,17 @@ public class UserService {
 
         }
 
+
+        //Setting the user's account creation date
+        Date utilDate = new java.util.Date();
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        user.setCreationdate(sqlDate);
+
+        //Encryption of password
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
         String encodedPassword = passwordEncoder.encode(user.getPassword());
-
         user.setPassword(encodedPassword);
+
 
         userRepository.save(user);
 
@@ -111,6 +72,9 @@ public class UserService {
     }
 
 
+    /*    This UNUSED method performs a sign-in process. It does not use JWT and merely checks credentials.
+
+     */
     public ResponseEntity<String> userSignIn(Users unverifiedUser) {
         Users dbUser = userRepository.findUserByUsername(unverifiedUser.getUsername());
 

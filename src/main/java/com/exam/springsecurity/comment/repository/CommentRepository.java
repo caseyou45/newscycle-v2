@@ -12,11 +12,10 @@ import java.util.List;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
-//    @Query(
-//            value = "SELECT * FROM COMMENT c WHERE c.parent_article = ?1",
-//            nativeQuery = true)
-//    Iterable<Comment> getCommentsByParentArticle(Integer parent_article);
 
     Iterable<Comment> getCommentsByParticleOrderByDateDesc(Integer particle);
 
+    Iterable<Comment> getCommentsByUsername(String username);
+
+    Comment getCommentByid(Integer id);
 }
