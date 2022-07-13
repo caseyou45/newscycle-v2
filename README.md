@@ -1,4 +1,4 @@
-# newscycle-v2
+# NewsCycle Backend
 
 This is the Springboot backend to a fullstack website called NewsCycle. The fronted, made with React, is also available to view as one of my repos. 
 The basic premise is that this website is a place to read and share 
