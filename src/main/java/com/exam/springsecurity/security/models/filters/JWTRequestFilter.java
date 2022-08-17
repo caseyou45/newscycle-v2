@@ -26,14 +26,18 @@ import java.util.Date;
 @Component
 public class JWTRequestFilter extends OncePerRequestFilter {
 
-    @Autowired
     private MyUserDetailsService userDetailsService;
 
-    @Autowired
     private JwtUtil jwtUtil;
 
-    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    public JWTRequestFilter(MyUserDetailsService userDetailsService, JwtUtil jwtUtil, UserRepository userRepository) {
+        this.userDetailsService = userDetailsService;
+        this.jwtUtil = jwtUtil;
+        this.userRepository = userRepository;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -52,7 +56,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
 
             //Handles burner account expiration

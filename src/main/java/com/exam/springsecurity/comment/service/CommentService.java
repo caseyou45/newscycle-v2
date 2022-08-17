@@ -2,37 +2,25 @@ package com.exam.springsecurity.comment.service;
 
 import com.exam.springsecurity.comment.model.Comment;
 import com.exam.springsecurity.comment.repository.CommentRepository;
-import com.exam.springsecurity.user.model.Users;
-import com.exam.springsecurity.user.repository.UserRepository;
-import com.exam.springsecurity.vote.model.Vote;
-import com.exam.springsecurity.vote.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Component
 public class CommentService {
 
-    @Autowired
-    private UserRepository userRepository;
 
-    @Autowired
-    private VoteRepository voteRepository;
-
-    @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    public CommentService(CommentRepository commentRepository) {
+        this.commentRepository = commentRepository;
+    }
 
-    /*    This method saves one comment to the databse.
 
+    /*    This method saves one comment to the database.
       @param   the comment
       @return  the saved comment
-
       */
-
-
     public Comment addComment(Comment comment) {
         commentRepository.save(comment);
         return comment;
@@ -41,7 +29,6 @@ public class CommentService {
 
 
     /*    This method returned all comments associated with an article.
-
       @param  the id of the article
       @return all comments associated with that article
 
@@ -66,18 +53,16 @@ public class CommentService {
         commentRepository.save(oldComment);
 
         return oldComment;
+
     }
 
 
     /*    This method 'deletes' a comment. Because the comments are intended to be 'threaded' on the frontend,
           a comment can not be actually deleted. Instead, the author id is changed to a default (5), and the content and
           username are changed to 'removed'.
-
       @param  the id and the comment
       @return  the deleted (aka 'removed') comment
-
       */
-
 
     public Comment deleteCommentByID(Integer comment_id, Comment commentDeleted) {
         Comment oldComment = commentRepository.findById(comment_id).get();

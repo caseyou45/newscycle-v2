@@ -18,15 +18,17 @@ import java.util.Optional;
 
 public class ArticleController {
 
-    @Autowired
     private ArticleService articleService;
 
-    /*Route for returning a list of articles by category.
+    @Autowired
+    public ArticleController(ArticleService articleService) {
+        this.articleService = articleService;
+    }
 
+
+    /*Route for returning a list of articles by category.
       @param  category of news
       @return articles by requested category
-
-
       */
 
     @GetMapping(path = "/article/category/{category}")
@@ -36,7 +38,6 @@ public class ArticleController {
     }
 
     /*Route for returning one article by its id
-
       @param  id of a requested article
       @return requested article
 

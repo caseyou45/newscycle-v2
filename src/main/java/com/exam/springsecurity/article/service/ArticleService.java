@@ -26,8 +26,6 @@ public class ArticleService {
 
        @param  string of category choice (science, technology, general, etc.)
        @return  articles of the requested category
-
-
      */
     public List<Article> getArticlesByCategory(String category) throws ParseException {
         String uri = String.format("https://newsapi.org/v2/top-headlines?country=us&category=%s&apiKey=f8453aaefcaf4cbf90fe82afa03b2bc1", category);
@@ -79,10 +77,8 @@ public class ArticleService {
 
     }
 /*    This method returned one article by ID.
-
       @param  id of requested article
       @return   the article
-
       */
 
     public Optional<Article> getOneArticleByID(int id) {

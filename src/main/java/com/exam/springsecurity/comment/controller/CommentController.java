@@ -11,8 +11,13 @@ import org.springframework.web.bind.annotation.*;
 public class CommentController {
 
 
-    @Autowired
     private CommentService commentService;
+
+
+    @Autowired
+    public CommentController(CommentService commentService) {
+        this.commentService = commentService;
+    }
 
     /*  Route for saving one comment
 
@@ -51,7 +56,6 @@ public class CommentController {
     @PatchMapping(path = "/comment/edit/{comment_id}")
     public @ResponseBody
     Comment updateCommentByID(@PathVariable Integer comment_id, @RequestBody Comment comment) {
-
         return commentService.updateCommentByID(comment_id, comment);
     }
 
@@ -67,16 +71,13 @@ public class CommentController {
     @PatchMapping(path = "/comment/delete/{comment_id}")
     public @ResponseBody
     Comment deleteCommentByID(@PathVariable Integer comment_id, @RequestBody Comment comment) {
-
         return commentService.deleteCommentByID(comment_id, comment);
     }
 
 
      /*  Route for getting all comments made by user
-
       @param  id of the user
       @return all comments associated with the user
-
       */
 
     @GetMapping(path = "/comment/user/commented/{username}")
@@ -87,10 +88,8 @@ public class CommentController {
 
 
    /*  Route for getting one comment by id.
-
       @param  id of the comment
       @return the comment
-
       */
 
     @GetMapping(path = "/comment/voted/{id}")

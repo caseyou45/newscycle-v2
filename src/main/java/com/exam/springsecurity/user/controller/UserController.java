@@ -5,7 +5,6 @@ import com.exam.springsecurity.security.models.AuthenticationResponse;
 import com.exam.springsecurity.security.services.MyUserDetailsService;
 import com.exam.springsecurity.security.util.JwtUtil;
 import com.exam.springsecurity.user.model.Users;
-import com.exam.springsecurity.user.repository.UserRepository;
 import com.exam.springsecurity.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,27 +16,31 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.Optional;
 
 @Controller
 @RequestMapping(path = "/api")
 
 public class UserController {
+    private final UserService userService;
+
+    private final AuthenticationManager authenticationManager;
+
+    private final MyUserDetailsService userDetailsService;
+
+    private final JwtUtil jwtTokenUtil;
+
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private MyUserDetailsService userDetailsService;
-
-    @Autowired
-    private JwtUtil jwtTokenUtil;
-    @Autowired
-    private UserRepository userRepository;
+    public UserController(UserService userService,
+                          AuthenticationManager authenticationManager,
+                          MyUserDetailsService userDetailsService,
+                          JwtUtil jwtTokenUtil) {
+        this.userService = userService;
+        this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
+        this.jwtTokenUtil = jwtTokenUtil;
+    }
 
 
     /*  This route process the user signup.
@@ -48,8 +51,7 @@ public class UserController {
       */
     @PostMapping(path = "/user/auth/signup")
     public @ResponseBody
-    ResponseEntity userSignUp(@RequestBody Users user) {
-
+    ResponseEntity<?> userSignUp(@RequestBody Users user) {
         return userService.userSignUp(user);
 
     }
@@ -58,7 +60,6 @@ public class UserController {
 
      The route passes a user through the auth process. If a user is not found with provided credentials, an
      error is returned. If successful, a jwt is created and returned to the user.
-
      @param  - takes in user
      @return  - If successful, a jwt is returned
 
@@ -89,8 +90,6 @@ public class UserController {
     /* This route returns to the signed-in user their details.
         The sign-in process only returns a jwt. This method simply returns the rest of the
         user info that the user will need.
-
-
      @param  - takes in username
      @return  - returns user's info
 
