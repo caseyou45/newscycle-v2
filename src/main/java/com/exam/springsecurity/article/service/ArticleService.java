@@ -5,6 +5,8 @@ import com.exam.springsecurity.article.respository.ArticleRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -81,7 +83,7 @@ public class ArticleService {
       @return   the article
       */
 
-    public Optional<Article> getOneArticleByID(int id) {
-        return articleRepository.findById(id);
+    public Article getOneArticleByID(int id) {
+        return articleRepository.findById(id).get();
     }
 }

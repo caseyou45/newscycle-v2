@@ -16,8 +16,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @Controller
 @RequestMapping(path = "/api")
 
@@ -51,7 +49,7 @@ public class UserController {
       */
     @PostMapping(path = "/user/auth/signup")
     public @ResponseBody
-    ResponseEntity<?> userSignUp(@RequestBody Users user) {
+    ResponseEntity<Users> userSignUp(@RequestBody Users user) {
         return userService.userSignUp(user);
 
     }
@@ -64,8 +62,9 @@ public class UserController {
      @return  - If successful, a jwt is returned
 
   */
-    @RequestMapping(value = "/user/auth/signin", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+    @PostMapping(value = "/user/auth/signin")
+    public @ResponseBody
+    ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
 
 
         try {
@@ -97,8 +96,15 @@ public class UserController {
 
     @GetMapping(path = "/user/details/{username}")
     public @ResponseBody
-    Optional<Users> getOneUSer(@PathVariable String username) {
-        return userService.getUserByUsername(username);
+    ResponseEntity<Users> getOneUser(@PathVariable String username) {
+        Users user = userService.getUserByUsername(username);
+
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 
 

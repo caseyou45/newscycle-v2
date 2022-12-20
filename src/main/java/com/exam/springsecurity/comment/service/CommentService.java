@@ -5,6 +5,8 @@ import com.exam.springsecurity.comment.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class CommentService {
 
@@ -34,7 +36,7 @@ public class CommentService {
 
       */
 
-    public Iterable<Comment> getCommentsByParentArticle(Integer particle) {
+    public List<Comment> getCommentsByParentArticle(Integer particle) {
         return commentRepository.getCommentsByParticleOrderByDateDesc(particle);
     }
 
@@ -74,13 +76,13 @@ public class CommentService {
         return oldComment;
     }
 
-    public Iterable<Comment> getCommentsByUsername(String username) {
+    public List<Comment> getCommentsByUsername(String username) {
         return commentRepository.getCommentsByUsername(username);
 
     }
 
     public Comment getCommentByID(Integer id) {
-        return commentRepository.getCommentByid(id);
+        return commentRepository.getById(id);
 
     }
 

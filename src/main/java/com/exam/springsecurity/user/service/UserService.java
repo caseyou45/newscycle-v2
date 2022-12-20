@@ -3,18 +3,15 @@ package com.exam.springsecurity.user.service;
 import com.exam.springsecurity.user.model.Users;
 import com.exam.springsecurity.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.Optional;
-import java.util.TimeZone;
 
 
-@Component
+@Service
 public class UserService {
 
     @Autowired
@@ -27,10 +24,10 @@ public class UserService {
 
       */
 
-    public Optional<Users> getUserByUsername(String username) {
-        Optional<Users> user = Optional.ofNullable(userRepository.findUserByUsername(username));
+    public Users getUserByUsername(String username) {
 
-        return user;
+        return userRepository.findUserByUsername(username);
+
     }
 
 
@@ -45,12 +42,11 @@ public class UserService {
 
 
     public ResponseEntity userSignUp(Users user) {
-        Optional<Users> userOptionalByUsername = Optional.ofNullable(userRepository.findUserByUsername(user.getUsername()));
+        boolean userAlreadyExists = userRepository.findExistByUsername(user.getUsername());
 
-        if (userOptionalByUsername.isPresent()) {
+        if (userAlreadyExists) {
             return new ResponseEntity("Username already in use",
                     HttpStatus.FORBIDDEN);
-
         }
 
 
@@ -96,6 +92,10 @@ public class UserService {
                     HttpStatus.FORBIDDEN);
         }
 
+    }
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
 

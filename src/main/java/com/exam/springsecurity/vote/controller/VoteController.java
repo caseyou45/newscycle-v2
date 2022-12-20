@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping(path = "/api")
 
@@ -60,7 +62,7 @@ public class VoteController {
 
     @GetMapping(path = "/vote/{id}")
     public @ResponseBody
-    Iterable<Vote> getVotesByCommentID(@PathVariable Integer id) {
+    List<Vote> getVotesByCommentID(@PathVariable Integer id) {
         return voteService.getVotesByCommentID(id);
     }
 
@@ -72,7 +74,7 @@ public class VoteController {
   */
     @GetMapping(path = "/vote/user/{username}")
     public @ResponseBody
-    Iterable<Vote> getCommentsMadeByUser(@PathVariable String username) {
+    List<Vote> getCommentsMadeByUser(@PathVariable String username) {
         return voteService.getVotesByUsername(username);
     }
 }

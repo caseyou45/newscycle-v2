@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping(path = "/api")
 public class CommentController {
@@ -42,7 +44,7 @@ public class CommentController {
 
     @GetMapping(path = "/comment/{parent_article}")
     public @ResponseBody
-    Iterable<Comment> getCommentsByParentArticle(@PathVariable Integer parent_article) {
+    List<Comment> getCommentsByParentArticle(@PathVariable Integer parent_article) {
         return commentService.getCommentsByParentArticle(parent_article);
     }
 
@@ -82,7 +84,7 @@ public class CommentController {
 
     @GetMapping(path = "/comment/user/commented/{username}")
     public @ResponseBody
-    Iterable<Comment> getCommentsMadeByUser(@PathVariable String username) {
+    List<Comment> getCommentsMadeByUser(@PathVariable String username) {
         return commentService.getCommentsByUsername(username);
     }
 

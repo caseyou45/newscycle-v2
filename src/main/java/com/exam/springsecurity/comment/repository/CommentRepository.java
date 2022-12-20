@@ -13,9 +13,9 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
 
-    Iterable<Comment> getCommentsByParticleOrderByDateDesc(Integer particle);
+    List<Comment> getCommentsByParticleOrderByDateDesc(Integer particle);
 
-    Iterable<Comment> getCommentsByUsername(String username);
+    List<Comment> getCommentsByUsername(String username);
 
-    Comment getCommentByid(Integer id);
+
 }
