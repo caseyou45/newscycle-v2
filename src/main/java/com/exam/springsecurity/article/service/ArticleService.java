@@ -5,15 +5,11 @@ import com.exam.springsecurity.article.respository.ArticleRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class ArticleService {

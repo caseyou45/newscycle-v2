@@ -1,12 +1,16 @@
 package com.exam.springsecurity.comment.controller;
 
+import com.exam.springsecurity.article.model.Article;
 import com.exam.springsecurity.comment.model.Comment;
 import com.exam.springsecurity.comment.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping(path = "/api")
@@ -57,8 +61,13 @@ public class CommentController {
   */
     @PatchMapping(path = "/comment/edit/{comment_id}")
     public @ResponseBody
-    Comment updateCommentByID(@PathVariable Integer comment_id, @RequestBody Comment comment) {
-        return commentService.updateCommentByID(comment_id, comment);
+    ResponseEntity<Comment> updateCommentByID(@PathVariable Integer comment_id, @RequestBody Comment comment) {
+        try {
+            Comment returnedComment = commentService.updateCommentByID(comment_id, comment);
+            return new ResponseEntity<>(returnedComment, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 
@@ -72,8 +81,13 @@ public class CommentController {
 
     @PatchMapping(path = "/comment/delete/{comment_id}")
     public @ResponseBody
-    Comment deleteCommentByID(@PathVariable Integer comment_id, @RequestBody Comment comment) {
-        return commentService.deleteCommentByID(comment_id, comment);
+    ResponseEntity<?> deleteCommentByID(@PathVariable Integer comment_id, @RequestBody Comment comment) {
+        try {
+            Comment returnedComment = commentService.deleteCommentByID(comment_id, comment);
+            return new ResponseEntity<>(returnedComment, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 
@@ -94,10 +108,16 @@ public class CommentController {
       @return the comment
       */
 
-    @GetMapping(path = "/comment/voted/{id}")
+    @GetMapping(path = "/comment/id/{id}")
     public @ResponseBody
-    Comment getCommentByID(@PathVariable Integer id) {
-        return commentService.getCommentByID(id);
+    ResponseEntity<Comment> getCommentByID(@PathVariable Integer id) {
+        try {
+            Comment comment = commentService.getCommentByID(id);
+            return new ResponseEntity<>(comment, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
 
 }

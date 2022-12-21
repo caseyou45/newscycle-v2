@@ -51,7 +51,9 @@ public class CommentService {
 
     public Comment updateCommentByID(Integer comment_id, Comment newComment) {
         Comment oldComment = commentRepository.findById(comment_id).get();
+
         oldComment.setContent(newComment.getContent());
+
         commentRepository.save(oldComment);
 
         return oldComment;
@@ -82,7 +84,7 @@ public class CommentService {
     }
 
     public Comment getCommentByID(Integer id) {
-        return commentRepository.getById(id);
+        return commentRepository.findById(id).get();
 
     }
 
