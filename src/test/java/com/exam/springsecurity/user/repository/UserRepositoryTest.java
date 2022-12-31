@@ -17,6 +17,10 @@ class UserRepositoryTest {
     private UserRepository userRepository;
 
 
+
+    /*Creates a user with username/password of test if none exists. Then checks that user test
+     * can be found by username. Includes option to delete user.*/
+
     @Test
     void isUserExistsByUsername() {
         if (!userRepository.findExistByUsername("test")) {
@@ -25,6 +29,10 @@ class UserRepositoryTest {
         }
         Users result = userRepository.findUserByUsername("test");
         assertThat(result.getUsername()).isEqualTo("test");
+
+//        //Option to delete (and ensure deletion of) user to ensure test user is not persisted.
+//        userRepository.delete(result);
+//        assertThat(userRepository.findUserByUsername("test")).isNull();
 
 
     }

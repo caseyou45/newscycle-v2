@@ -17,12 +17,14 @@ class CommentRepositoryTest {
     CommentRepository commentRepository;
 
 
+    //Tests that comments can be retrieved by associated article.
     @Test
     void getCommentsByParticleOrderByDateDesc() {
         List<Comment> comments = commentRepository.getCommentsByParticleOrderByDateDesc(1);
         assertThat(comments.size()).isGreaterThan(0);
     }
 
+    //Tests that comments by username can be found. "Test" user is used.
     @Test
     void getCommentsByUsername() {
         List<Comment> comments = commentRepository.getCommentsByUsername("test");
@@ -32,8 +34,8 @@ class CommentRepositoryTest {
 
     @Test
     void getCommentByid() {
-//        Comment comment = commentRepository.getCommentByid(1);
-//        assertThat(comment).isNotNull();
+        Comment comment = commentRepository.getById(1);
+        assertThat(comment).isNotNull();
 
 
     }
