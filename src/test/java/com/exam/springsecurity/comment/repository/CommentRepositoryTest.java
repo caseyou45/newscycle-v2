@@ -21,21 +21,21 @@ class CommentRepositoryTest {
     @Test
     void getCommentsByParticleOrderByDateDesc() {
         List<Comment> comments = commentRepository.getCommentsByParticleOrderByDateDesc(1);
-        assertThat(comments.size()).isGreaterThan(0);
+        assertThat(comments.size()).as("Get Comment By Article and Order by Date").isGreaterThan(0);
     }
 
-    //Tests that comments by username can be found. "Test" user is used.
+    //Tests that comments by username can be found. "testuser" user is used.
     @Test
     void getCommentsByUsername() {
-        List<Comment> comments = commentRepository.getCommentsByUsername("test");
-        assertThat(comments.size()).isGreaterThan(0);
+        List<Comment> comments = commentRepository.getCommentsByUsername("testuser");
+        assertThat(comments.size()).as("Get Comment By Username").isGreaterThan(0);
 
     }
 
     @Test
     void getCommentByid() {
         Comment comment = commentRepository.getById(1);
-        assertThat(comment).isNotNull();
+        assertThat(comment).as("Get Comment By ID").isNotNull();
 
 
     }

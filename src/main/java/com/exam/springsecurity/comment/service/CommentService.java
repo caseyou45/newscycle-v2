@@ -68,10 +68,10 @@ public class CommentService {
       @return  the deleted (aka 'removed') comment
       */
 
-    public Comment deleteCommentByID(Integer comment_id, Comment commentDeleted) {
+    public Comment deleteCommentByID(Integer comment_id) {
         Comment oldComment = commentRepository.findById(comment_id).get();
-        oldComment.setContent(commentDeleted.getContent());
-        oldComment.setUsername(commentDeleted.getUsername());
+        oldComment.setContent("COMMENT DELETED");
+        oldComment.setUsername("COMMENT DELETED");
         oldComment.setAuthor(5);
         commentRepository.save(oldComment);
 

@@ -83,7 +83,7 @@ public class CommentController {
     public @ResponseBody
     ResponseEntity<?> deleteCommentByID(@PathVariable Integer comment_id, @RequestBody Comment comment) {
         try {
-            Comment returnedComment = commentService.deleteCommentByID(comment_id, comment);
+            Comment returnedComment = commentService.deleteCommentByID(comment_id);
             return new ResponseEntity<>(returnedComment, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
