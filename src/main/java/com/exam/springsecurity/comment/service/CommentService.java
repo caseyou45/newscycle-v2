@@ -11,7 +11,7 @@ import java.util.List;
 public class CommentService {
 
 
-    private CommentRepository commentRepository;
+    private final CommentRepository commentRepository;
 
     @Autowired
     public CommentService(CommentRepository commentRepository) {
@@ -72,7 +72,7 @@ public class CommentService {
         Comment oldComment = commentRepository.findById(comment_id).get();
         oldComment.setContent("COMMENT DELETED");
         oldComment.setUsername("COMMENT DELETED");
-        oldComment.setAuthor(5);
+        //oldComment.setAuthor(5);
         commentRepository.save(oldComment);
 
         return oldComment;

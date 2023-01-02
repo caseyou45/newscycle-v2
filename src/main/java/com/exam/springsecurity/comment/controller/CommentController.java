@@ -17,7 +17,7 @@ import java.util.NoSuchElementException;
 public class CommentController {
 
 
-    private CommentService commentService;
+    private final CommentService commentService;
 
 
     @Autowired
@@ -43,12 +43,13 @@ public class CommentController {
 
       @param  id of the article
       @return all comments associated with the article
+      @Example request URI /api/comment/article?parent_article=1
 
       */
 
-    @GetMapping(path = "/comment/{parent_article}")
+    @GetMapping(path = "/comment/article")
     public @ResponseBody
-    List<Comment> getCommentsByParentArticle(@PathVariable Integer parent_article) {
+    List<Comment> getCommentsByParentArticle(@RequestParam Integer parent_article) {
         return commentService.getCommentsByParentArticle(parent_article);
     }
 
@@ -57,11 +58,12 @@ public class CommentController {
 
     @param  the comment in the request body, the id of the comment as a path variable
     @return the comment once updated
+    @Example request URI /api/comment/edit?comment_id=1
 
   */
-    @PatchMapping(path = "/comment/edit/{comment_id}")
+    @PatchMapping(path = "/comment/edit")
     public @ResponseBody
-    ResponseEntity<Comment> updateCommentByID(@PathVariable Integer comment_id, @RequestBody Comment comment) {
+    ResponseEntity<Comment> updateCommentByID(@RequestParam Integer comment_id, @RequestBody Comment comment) {
         try {
             Comment returnedComment = commentService.updateCommentByID(comment_id, comment);
             return new ResponseEntity<>(returnedComment, HttpStatus.OK);
@@ -75,13 +77,14 @@ public class CommentController {
 
     @param  the comment in the request body, the id of the comment as a path variable
     @return the comment once 'deleted.' See method deleteCommentByID for details.
+    @Example request URI /api/comment/delete?comment_id=1
 
 
      */
 
-    @PatchMapping(path = "/comment/delete/{comment_id}")
+    @PatchMapping(path = "/comment/delete")
     public @ResponseBody
-    ResponseEntity<?> deleteCommentByID(@PathVariable Integer comment_id, @RequestBody Comment comment) {
+    ResponseEntity<?> deleteCommentByID(@RequestParam Integer comment_id, @RequestBody Comment comment) {
         try {
             Comment returnedComment = commentService.deleteCommentByID(comment_id);
             return new ResponseEntity<>(returnedComment, HttpStatus.OK);
@@ -94,11 +97,13 @@ public class CommentController {
      /*  Route for getting all comments made by user
       @param  id of the user
       @return all comments associated with the user
+      @Example request URI /api/comment/user?username=fooname
+
       */
 
-    @GetMapping(path = "/comment/user/commented/{username}")
+    @GetMapping(path = "/comment/user")
     public @ResponseBody
-    List<Comment> getCommentsMadeByUser(@PathVariable String username) {
+    List<Comment> getCommentsMadeByUser(@RequestParam String username) {
         return commentService.getCommentsByUsername(username);
     }
 
@@ -106,13 +111,15 @@ public class CommentController {
    /*  Route for getting one comment by id.
       @param  id of the comment
       @return the comment
+      @Example request URI /api/comment?comment_id=1
+
       */
 
-    @GetMapping(path = "/comment/id/{id}")
+    @GetMapping(path = "/comment")
     public @ResponseBody
-    ResponseEntity<Comment> getCommentByID(@PathVariable Integer id) {
+    ResponseEntity<Comment> getCommentByID(@RequestParam Integer comment_id) {
         try {
-            Comment comment = commentService.getCommentByID(id);
+            Comment comment = commentService.getCommentByID(comment_id);
             return new ResponseEntity<>(comment, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -20,6 +20,11 @@ public class Users {
     public Users() {
     }
 
+    public Users(String name, String password) {
+        this.username = name;
+        this.password = password;
+    }
+
     public Users(String name, String password, Date creationdate) {
         this.username = name;
         this.password = password;
