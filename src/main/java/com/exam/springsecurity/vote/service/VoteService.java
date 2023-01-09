@@ -27,7 +27,7 @@ public class VoteService {
 
     }
 
-    public ResponseEntity removeVote(Vote vote) {
+    public ResponseEntity deleteVote(Vote vote) {
         voteRepository.deleteById(vote.getId());
         return new ResponseEntity(HttpStatus.OK);
     }

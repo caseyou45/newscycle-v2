@@ -64,7 +64,7 @@ public class UserController {
   */
     @PostMapping(value = "/user/auth/signin")
     public @ResponseBody
-    ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+    ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) {
 
 
         try {

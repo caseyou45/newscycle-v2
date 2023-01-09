@@ -1,10 +1,8 @@
 package com.exam.springsecurity.comment.service;
+
 import com.exam.springsecurity.comment.model.Comment;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -56,11 +54,10 @@ class CommentServiceTest {
     @Test
     void updateCommentByID() {
         Comment savedComment = commentService.addComment(comment);
-         String newContent =  "NEW CONTENT";
-         comment.setContent(newContent);
-        Comment updatedComment = commentService.updateCommentByID(comment.getId(), comment);
+        String newContent = "NEW CONTENT";
+        comment.setContent(newContent);
+        Comment updatedComment = commentService.updateCommentByID(comment);
         assertThat(newContent).as("Check Updated Comment Saved").isEqualTo(updatedComment.getContent());
-
 
 
     }
@@ -87,7 +84,7 @@ class CommentServiceTest {
     //Tests that a comment be retrieved by ID
     @Test
     void getCommentByID() {
-       Comment comment = commentService.getCommentByID(1);
+        Comment comment = commentService.getCommentByID(1);
         assertThat(comment).as("Get Comment by ID").isNotNull();
     }
 }

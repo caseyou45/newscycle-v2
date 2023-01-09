@@ -16,7 +16,7 @@ import java.util.List;
 public class VoteController {
 
 
-    private VoteService voteService;
+    private final VoteService voteService;
 
 
     @Autowired
@@ -27,10 +27,9 @@ public class VoteController {
         /*  Route for making one vote.
          @param  the vote in the request body
          @return the vote once saved
-
+         @Example request URI /api/vote
 
      */
-
 
     @PostMapping(path = "/vote")
     public @ResponseBody
@@ -43,26 +42,27 @@ public class VoteController {
        was having difficulties with the delete method. So post is used.
          @param  the vote in the request body
          @return the vote once deleted
-
+         @Example request URI /api/vote/delete
 
      */
 
-    @PostMapping(path = "/vote/delete")
+    @PatchMapping(path = "/vote/delete")
     public @ResponseBody
-    ResponseEntity removeVote(@RequestBody Vote vote) {
-        return voteService.removeVote(vote);
+    ResponseEntity deleteVote(@RequestBody Vote vote) {
+        return voteService.deleteVote(vote);
 
     }
 
     /*    Route for getting all votes associated with a comment
          @param  the id of the comment
          @return the votes for that comment
+         @Example request URI /api/vote?id=1
 
      */
 
-    @GetMapping(path = "/vote/{id}")
+    @GetMapping(path = "/vote")
     public @ResponseBody
-    List<Vote> getVotesByCommentID(@PathVariable Integer id) {
+    List<Vote> getVotesByCommentID(@RequestParam Integer id) {
         return voteService.getVotesByCommentID(id);
     }
 
@@ -70,11 +70,12 @@ public class VoteController {
 
       @param  the user's username as a path variable
       @return the votes make by the user
+      @Example request URI /api/vote/user?username=fooname
 
   */
-    @GetMapping(path = "/vote/user/{username}")
+    @GetMapping(path = "/vote/user")
     public @ResponseBody
-    List<Vote> getCommentsMadeByUser(@PathVariable String username) {
+    List<Vote> getCommentsMadeByUser(@RequestParam String username) {
         return voteService.getVotesByUsername(username);
     }
 }

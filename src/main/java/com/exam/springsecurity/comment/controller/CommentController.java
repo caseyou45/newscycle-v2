@@ -58,14 +58,14 @@ public class CommentController {
 
     @param  the comment in the request body, the id of the comment as a path variable
     @return the comment once updated
-    @Example request URI /api/comment/edit?comment_id=1
+    @Example request URI /api/comment/edit
 
   */
     @PatchMapping(path = "/comment/edit")
     public @ResponseBody
-    ResponseEntity<Comment> updateCommentByID(@RequestParam Integer comment_id, @RequestBody Comment comment) {
+    ResponseEntity<Comment> updateCommentByID(@RequestBody Comment comment) {
         try {
-            Comment returnedComment = commentService.updateCommentByID(comment_id, comment);
+            Comment returnedComment = commentService.updateCommentByID(comment);
             return new ResponseEntity<>(returnedComment, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -77,16 +77,15 @@ public class CommentController {
 
     @param  the comment in the request body, the id of the comment as a path variable
     @return the comment once 'deleted.' See method deleteCommentByID for details.
-    @Example request URI /api/comment/delete?comment_id=1
-
+    @Example request URI /api/comment/delete
 
      */
 
     @PatchMapping(path = "/comment/delete")
     public @ResponseBody
-    ResponseEntity<?> deleteCommentByID(@RequestParam Integer comment_id, @RequestBody Comment comment) {
+    ResponseEntity<?> deleteCommentByID(@RequestBody Comment comment) {
         try {
-            Comment returnedComment = commentService.deleteCommentByID(comment_id);
+            Comment returnedComment = commentService.deleteCommentByID(comment.getId());
             return new ResponseEntity<>(returnedComment, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

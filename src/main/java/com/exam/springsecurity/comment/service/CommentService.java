@@ -49,8 +49,8 @@ public class CommentService {
       */
 
 
-    public Comment updateCommentByID(Integer comment_id, Comment newComment) {
-        Comment oldComment = commentRepository.findById(comment_id).get();
+    public Comment updateCommentByID(Comment newComment) {
+        Comment oldComment = commentRepository.findById(newComment.getId()).get();
 
         oldComment.setContent(newComment.getContent());
 

@@ -1,12 +1,9 @@
 package com.exam.springsecurity.comment.controller;
 
 import com.exam.springsecurity.comment.repository.CommentRepository;
-import com.exam.springsecurity.security.models.filters.JWTRequestFilter;
 import com.exam.springsecurity.security.services.MyUserDetailsService;
 import com.exam.springsecurity.security.util.JwtUtil;
-import com.exam.springsecurity.user.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +21,6 @@ import com.exam.springsecurity.comment.model.Comment;
 import java.util.Calendar;
 import java.util.Random;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -47,11 +43,7 @@ class CommentControllerTest {
     @Autowired
     private JwtUtil jwtUtil;
     @Autowired
-    private JWTRequestFilter jWTRequestFilter;
-    @Autowired
     private MyUserDetailsService myUserDetailsService;
-    @Autowired
-    private UserService userService;
     @Autowired
     private AuthenticationManager authenticationManager;
 
