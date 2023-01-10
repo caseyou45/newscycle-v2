@@ -19,6 +19,7 @@ public class Comment {
     private Integer particle;
     private Integer pcomment;
     private String username;
+    private boolean deleted;
 
     public Comment() {
     }
@@ -27,7 +28,7 @@ public class Comment {
                    String content,
                    Date date,
                    Integer particle,
-                   Integer pcomment, String username) {
+                   Integer pcomment, String username, boolean deleted) {
 
         this.author = author;
         this.content = content;
@@ -35,6 +36,7 @@ public class Comment {
         this.particle = particle;
         this.pcomment = pcomment;
         this.username = username;
+        this.deleted = deleted;
     }
 
 
@@ -109,5 +111,13 @@ public class Comment {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

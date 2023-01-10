@@ -29,6 +29,7 @@ class CommentServiceTest {
         comment.setContent("test comment");
         comment.setAuthor(1);
         comment.setParticle(1);
+        comment.setDeleted(false);
 
     }
 

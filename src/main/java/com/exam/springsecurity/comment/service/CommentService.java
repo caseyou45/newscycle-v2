@@ -71,8 +71,8 @@ public class CommentService {
     public Comment deleteCommentByID(Integer comment_id) {
         Comment oldComment = commentRepository.findById(comment_id).get();
         oldComment.setContent("COMMENT DELETED");
-        oldComment.setUsername("COMMENT DELETED");
-        //oldComment.setAuthor(5);
+        oldComment.setUsername("REMOVED");
+        oldComment.setDeleted(true);
         commentRepository.save(oldComment);
 
         return oldComment;

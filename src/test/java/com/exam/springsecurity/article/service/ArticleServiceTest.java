@@ -26,11 +26,7 @@ class ArticleServiceTest {
 
         List<Article> articles = null;
 
-        try {
-            articles = articleService.getArticlesByCategory("general");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        articles = articleService.getArticlesByCategory("general");
 
         Assertions.assertThat(articles.size()).as("Get Articles By Category").isGreaterThan(0);
     }

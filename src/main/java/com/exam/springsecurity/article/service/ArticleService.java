@@ -25,7 +25,7 @@ public class ArticleService {
        @param  string of category choice (science, technology, general, etc.)
        @return  articles of the requested category
      */
-    public List<Article> getArticlesByCategory(String category) throws ParseException {
+    public List<Article> getArticlesByCategory(String category) {
         String uri = String.format("https://newsapi.org/v2/top-headlines?country=us&category=%s&apiKey=f8453aaefcaf4cbf90fe82afa03b2bc1", category);
 
         //API in to String

@@ -56,11 +56,11 @@ public class VoteController {
     /*    Route for getting all votes associated with a comment
          @param  the id of the comment
          @return the votes for that comment
-         @Example request URI /api/vote?id=1
+         @Example request URI /api/vote/comment?id=1
 
      */
 
-    @GetMapping(path = "/vote")
+    @GetMapping(path = "/vote/comment")
     public @ResponseBody
     List<Vote> getVotesByCommentID(@RequestParam Integer id) {
         return voteService.getVotesByCommentID(id);

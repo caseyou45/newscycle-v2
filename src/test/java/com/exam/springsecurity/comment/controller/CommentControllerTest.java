@@ -87,7 +87,7 @@ class CommentControllerTest {
     void createCommentIfNull() {
         if (comment == null) {
             String commentContent = randomStringGenerator(10);
-            comment = new Comment(1, commentContent, new java.sql.Date(Calendar.getInstance().getTimeInMillis()), 1, null, "testuser");
+            comment = new Comment(1, commentContent, new java.sql.Date(Calendar.getInstance().getTimeInMillis()), 1, null, "testuser", false);
             commentRepository.save(comment);
         }
     }
@@ -108,7 +108,7 @@ class CommentControllerTest {
     @Test
     void getCommentsByParentArticle() {
 
-        assertDoesNotThrow(() -> mockMvc.perform(get("/api/comment/article?parent_article=1"))
+        assertDoesNotThrow(() -> mockMvc.perform(get("/api/comment/article?id=1"))
                 .andExpect(status().isOk()));
 
 
@@ -122,7 +122,7 @@ class CommentControllerTest {
         comment.setContent(newContent);
 
 
-        assertDoesNotThrow(() -> mockMvc.perform(patch("/api/comment/edit?comment_id=" + comment.getId())
+        assertDoesNotThrow(() -> mockMvc.perform(patch("/api/comment/edit")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("authorization", jwt)
                         .content(objectMapper.writeValueAsString(comment)))
@@ -134,14 +134,14 @@ class CommentControllerTest {
     @Test
     void getCommentByID() {
 
-        assertDoesNotThrow(() -> mockMvc.perform(get("/api/comment?comment_id=" + comment.getId()))
+        assertDoesNotThrow(() -> mockMvc.perform(get("/api/comment?id=" + comment.getId()))
                 .andExpect(status().isOk()));
     }
 
     @Test
     void deleteCommentByID() {
 
-        assertDoesNotThrow(() -> mockMvc.perform(patch("/api/comment/delete?comment_id=" + comment.getId())
+        assertDoesNotThrow(() -> mockMvc.perform(patch("/api/comment/delete")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("authorization", jwt)
                         .content(objectMapper.writeValueAsString(comment)))

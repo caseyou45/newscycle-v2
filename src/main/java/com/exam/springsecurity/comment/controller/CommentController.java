@@ -43,14 +43,14 @@ public class CommentController {
 
       @param  id of the article
       @return all comments associated with the article
-      @Example request URI /api/comment/article?parent_article=1
+      @Example request URI /api/comment/article?id=1
 
       */
 
     @GetMapping(path = "/comment/article")
     public @ResponseBody
-    List<Comment> getCommentsByParentArticle(@RequestParam Integer parent_article) {
-        return commentService.getCommentsByParentArticle(parent_article);
+    List<Comment> getCommentsByParentArticle(@RequestParam Integer id) {
+        return commentService.getCommentsByParentArticle(id);
     }
 
 
@@ -110,15 +110,15 @@ public class CommentController {
    /*  Route for getting one comment by id.
       @param  id of the comment
       @return the comment
-      @Example request URI /api/comment?comment_id=1
+      @Example request URI /api/comment?id=1
 
       */
 
     @GetMapping(path = "/comment")
     public @ResponseBody
-    ResponseEntity<Comment> getCommentByID(@RequestParam Integer comment_id) {
+    ResponseEntity<Comment> getCommentByID(@RequestParam Integer id) {
         try {
-            Comment comment = commentService.getCommentByID(comment_id);
+            Comment comment = commentService.getCommentByID(id);
             return new ResponseEntity<>(comment, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
