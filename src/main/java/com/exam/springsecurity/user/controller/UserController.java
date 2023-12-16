@@ -5,8 +5,9 @@ import com.exam.springsecurity.security.models.AuthenticationResponse;
 import com.exam.springsecurity.security.services.MyUserDetailsService;
 import com.exam.springsecurity.security.util.JwtUtil;
 import com.exam.springsecurity.user.model.Users;
+import com.exam.springsecurity.user.repository.UserRepository;
 import com.exam.springsecurity.user.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.exam.springsecurity.user.model.Users;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,9 +17,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+
 @Controller
 @RequestMapping(path = "/api")
-
 public class UserController {
     private final UserService userService;
 
@@ -28,16 +29,19 @@ public class UserController {
 
     private final JwtUtil jwtTokenUtil;
 
+    private final UserRepository userRepository;
 
-    @Autowired
+
     public UserController(UserService userService,
                           AuthenticationManager authenticationManager,
                           MyUserDetailsService userDetailsService,
-                          JwtUtil jwtTokenUtil) {
+                          JwtUtil jwtTokenUtil, 
+                          UserRepository userRepository) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.jwtTokenUtil = jwtTokenUtil;
+        this.userRepository = userRepository;
     }
 
 
@@ -81,7 +85,9 @@ public class UserController {
         final String jwt = jwtTokenUtil.generateToken(userDetails);
 
 
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+        Users user = userRepository.getByUsername(authenticationRequest.getUsername());
+
+        return ResponseEntity.ok(new AuthenticationResponse(jwt, user.getId(), user.getUsername()));
 
 
     }

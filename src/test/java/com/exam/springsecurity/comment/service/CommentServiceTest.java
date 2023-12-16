@@ -3,6 +3,7 @@ package com.exam.springsecurity.comment.service;
 import com.exam.springsecurity.comment.model.Comment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 

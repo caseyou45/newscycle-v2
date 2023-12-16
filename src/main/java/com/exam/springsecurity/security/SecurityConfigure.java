@@ -23,7 +23,6 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService myUserDetailsService;
 
-    @Autowired
     public SecurityConfigure(JWTRequestFilter jwtRequestFilter, UserDetailsService myUserDetailsService) {
         this.jwtRequestFilter = jwtRequestFilter;
         this.myUserDetailsService = myUserDetailsService;
@@ -39,17 +38,16 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/article/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/vote/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/comment/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/").permitAll()
-                .antMatchers("/api/user/auth/signup").permitAll()
-                .antMatchers("/api/user/auth/signin").permitAll()
-                .anyRequest().authenticated()
-                .and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.csrf(csrf -> csrf.disable())
+                .authorizeRequests(requests -> requests
+                        .antMatchers(HttpMethod.GET, "/api/article/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/api/vote/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/api/comment/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/").permitAll()
+                        .antMatchers("/api/user/auth/signup").permitAll()
+                        .antMatchers("/api/user/auth/signin").permitAll()
+                        .anyRequest().authenticated()).sessionManagement(management -> management
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

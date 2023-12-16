@@ -1,5 +1,6 @@
 package com.exam.springsecurity.comment.model;
 
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -20,7 +21,7 @@ public class Comment {
     private Integer pcomment;
     private String username;
     private boolean deleted;
-
+    
     public Comment() {
     }
 
@@ -37,23 +38,6 @@ public class Comment {
         this.pcomment = pcomment;
         this.username = username;
         this.deleted = deleted;
-    }
-
-
-    public Comment(Integer id,
-                   Integer author,
-                   String content,
-                   Date date,
-                   Integer particle,
-                   Integer pcomment,
-                   String username) {
-        this.id = id;
-        this.author = author;
-        this.content = content;
-        this.date = date;
-        this.particle = particle;
-        this.pcomment = pcomment;
-        this.username = username;
     }
 
 

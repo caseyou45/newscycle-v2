@@ -17,11 +17,15 @@ class VoteRepositoryTest {
     VoteRepository voteRepository;
 
     @Test
+    void getVotesID() {
+        Vote vote = voteRepository.findById(10).get();
+        assertThat(vote).as("Get Vote By ID").isNotNull();
+    }
+
+    @Test
     void getVotesByCommentid() {
         List<Vote> votes = voteRepository.getVotesByCommentid(29);
         assertThat(votes.size()).as("Get Votes By Comment ID").isGreaterThan(0);
-
-
     }
 
     @Test

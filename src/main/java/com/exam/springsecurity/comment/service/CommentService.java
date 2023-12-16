@@ -2,9 +2,15 @@ package com.exam.springsecurity.comment.service;
 
 import com.exam.springsecurity.comment.model.Comment;
 import com.exam.springsecurity.comment.repository.CommentRepository;
+import com.exam.springsecurity.user.model.Users;
+import com.exam.springsecurity.user.repository.UserRepository;
+import com.exam.springsecurity.vote.model.Vote;
+import com.exam.springsecurity.vote.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -13,9 +19,16 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
 
+    private final VoteRepository voteRepository;
+
+    private final UserRepository userRepository;
+
+
     @Autowired
-    public CommentService(CommentRepository commentRepository) {
+    public CommentService(CommentRepository commentRepository, VoteRepository voteRepository, UserRepository userRepository) {
         this.commentRepository = commentRepository;
+        this.voteRepository = voteRepository;
+        this.userRepository = userRepository;
     }
 
 
@@ -86,6 +99,25 @@ public class CommentService {
     public Comment getCommentByID(Integer id) {
         return commentRepository.findById(id).get();
 
+    }
+
+
+    public List<Comment> getCommentsLikedByUsername(String username) {
+
+        System.out.println(username);
+
+        Users user = userRepository.getByUsername(username);
+
+        List<Comment> comments = new ArrayList<>();
+
+        List<Vote> likes = voteRepository.getVotesByAuthor(user.getId());
+
+        for (Vote v : likes) {
+            comments.add(commentRepository.findById(v.getCommentid()).get());
+        }
+
+
+        return comments;
     }
 
 

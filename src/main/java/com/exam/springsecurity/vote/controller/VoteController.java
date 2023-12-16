@@ -78,6 +78,19 @@ public class VoteController {
     List<Vote> getCommentsMadeByUser(@RequestParam String username) {
         return voteService.getVotesByUsername(username);
     }
+
+    /*    Route for getting all votes associated with a user
+
+  @param  the vote id as a path variable
+  @return the vote associated with the id
+  @Example request URI /api/vote/id?id=1
+
+*/
+    @GetMapping(path = "/vote/id")
+    public @ResponseBody
+    Vote getVote(@RequestParam int id) {
+        return voteService.getVoteByID(id);
+    }
 }
 
 

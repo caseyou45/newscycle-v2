@@ -40,4 +40,9 @@ public class VoteService {
         Users user = userRepository.findUserByUsername(username);
         return voteRepository.getVotesByAuthor(user.getId());
     }
+
+    public Vote getVoteByID(int id) {
+        Vote vote = voteRepository.findById(id).get();
+        return vote;
+    }
 }

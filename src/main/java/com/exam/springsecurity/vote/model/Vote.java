@@ -6,20 +6,18 @@ import java.util.Date;
 
 @Entity
 @Table(name = "vote")
+
 public class Vote {
 
     @Id
     @SequenceGenerator(name = "vote_sequence", sequenceName = "vote_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vote_sequence")
-
-
     private Integer id;
     private Integer articleid;
     private Integer commentid;
     private Date date;
     private Integer author;
     private Integer vote;
-
 
     public Vote() {
     }
@@ -53,6 +51,7 @@ public class Vote {
         this.vote = vote;
 
     }
+    
 
     public Integer getId() {
         return id;

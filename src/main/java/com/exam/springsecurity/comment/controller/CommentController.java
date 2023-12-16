@@ -94,17 +94,32 @@ public class CommentController {
 
 
      /*  Route for getting all comments made by user
-      @param  id of the user
+      @param  username of the user
       @return all comments associated with the user
-      @Example request URI /api/comment/user?username=fooname
+      @Example request URI /api/comment/made/user?username=fooname
 
       */
 
-    @GetMapping(path = "/comment/user")
+    @GetMapping(path = "/comment/made/user")
     public @ResponseBody
     List<Comment> getCommentsMadeByUser(@RequestParam String username) {
         return commentService.getCommentsByUsername(username);
     }
+
+    /*  Route for getting all comments liked by user
+      @param  username of the user
+      @return all comments liked by the user
+      @Example request URI /api/comment/liked/user?username=fooname
+
+      */
+
+    @GetMapping(path = "/comment/liked/user")
+    public @ResponseBody
+    List<Comment> getCommentsLikedByUser(@RequestParam String username) {
+        return commentService.getCommentsLikedByUsername(username);
+    }
+
+
 
 
    /*  Route for getting one comment by id.
